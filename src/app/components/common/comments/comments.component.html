@@ -1,0 +1,90 @@
+@if (Comment) {
+@if (!isUpdateComment) {
+<div class="my-2 p-3 bg-body-tertiary border rounded-2">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex align-items-center justify-content-start">
+            <div class="Photo me-3">
+                @if (Comment.commentCreator.photo.includes("undefined") ||
+                !Comment.commentCreator.photo) {
+                <img class="w-100 rounded-circle" src="../assets/Photos/profile.png" alt="">
+                }
+                @else {
+                <img class="w-100 rounded-circle" [src]="Comment.commentCreator.photo"
+                    [alt]="Comment.commentCreator.name + ' Photo'">
+                }
+            </div>
+            <div class="d-flex justify-content-start">
+                <p class="fw-bold m-0 fs-small me-2">{{Comment.commentCreator.name}}</p>
+                <p class="m-0 fs-small">{{Comment.createdAt | date}}</p>
+            </div>
+        </div>
+        <div class="position-relative">
+            <i class="fa-solid fa-ellipsis fs-5 cursor-pointer" (click)="CommentOptMenuCollapse()"></i>
+            @if (Comment.commentCreator._id == _AuthenticationService.userData()?._id) {
+            @if (isCommentOptMenuCollapsed) {
+            <div class="comment-Opt-Menu rounded-2">
+                <p class="cursor-pointer" (click)="getOldComment()" (click)="isCommentOptMenuCollapsed = false; isUpdateComment = true">Update Comment</p>
+                <p class="m-0 cursor-pointer text-danger" (click)="deleteComment(Comment._id)">Delete Comment</p>
+            </div>
+            }
+            }
+            @else {
+            @if (isCommentOptMenuCollapsed) {
+            <div class="comment-Opt-Menu rounded-2">
+                <p>N/A</p>
+            </div>
+            }
+            }
+        </div>
+    </div>
+    @if (Comment.content) {
+    <p class="fs-small">{{Comment.content}}</p>
+    }
+    @else {
+    <p class="fs-small">comment doesn't exist <span class="text-danger">back-end problem</span></p>
+    }
+</div>
+}
+
+
+<!-- start update comment section -->
+
+@if (isUpdateComment) {
+<div class="my-2 p-3 bg-body-tertiary border rounded-2">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex align-items-center justify-content-start">
+            <div class="Photo me-3">
+                @if (Comment.commentCreator.photo.includes("undefined") ||
+                !Comment.commentCreator.photo) {
+                <img class="w-100 rounded-circle" src="../assets/Photos/profile.png" alt="">
+                }
+                @else {
+                <img class="w-100 rounded-circle" [src]="Comment.commentCreator.photo"
+                    [alt]="Comment.commentCreator.name + ' Photo'">
+                }
+            </div>
+            <div class="d-flex justify-content-start">
+                <p class="fw-bold m-0 fs-small me-2">{{Comment.commentCreator.name}}</p>
+                <p class="m-0 fs-small">{{Comment.createdAt | date}}</p>
+            </div>
+        </div>
+        <i class="fa-solid fa-circle-xmark text-primary fs-5 cursor-pointer" (click)="isUpdateComment = false"></i>
+    </div>
+    <p class="fs-small">{{commentContent}}</p>
+    <div class="row">
+        <div class="col-11">
+            <textarea class="form-control border-dashed bg-secondary-subtle border-secondary col-11"
+                placeholder="Write your thoughts here..." rows="3" [(ngModel)]="commentContent"></textarea>
+        </div>
+        <div class="col-1 d-flex justify-content-end align-items-center"><i
+                class="fa-solid fa-paper-plane fa-lg text-primary cursor-pointer"
+                (click)="updateComment(Comment._id)"></i></div>
+    </div>
+
+</div>
+}
+
+<!-- end update comment section -->
+
+
+}

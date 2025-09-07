@@ -1,0 +1,14 @@
+.Personal-Info
+{
+    direction: rtl;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--components-color);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+.Profile-Photo
+{
+    width: 200px;
+    height: 200px;
+}

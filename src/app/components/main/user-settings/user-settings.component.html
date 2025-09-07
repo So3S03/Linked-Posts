@@ -1,0 +1,122 @@
+<section class="pt-5 setting-section">
+    <div class="w-40 mx-auto rounded-4 position-relative border custom-padding px-3 bg-sec-color">
+        <div class="settings-Photo bg-body">
+            <img class="w-100 rounded-circle object-fit-cover h-100" [src]="_AuthenticationService.userData()?.photo" alt="">
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-md-6 mb-3">
+                <label for="NameControl" class="form-label">User Name</label>
+                <input type="text" class="form-control" id="NameControl" disabled readonly [value]="_AuthenticationService.userData()?.name">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="GenderControl" class="form-label">User Gender</label>
+                <input type="text" class="form-control" id="GenderControl" disabled readonly [value]="_AuthenticationService.userData()?.gender">
+            </div>
+            <div class="col-md-12 mb-3">
+                <label for="EmailControl" class="form-label">User Email</label>
+                <input type="email" class="form-control" id="EmailControl" disabled readonly [value]="_AuthenticationService.userData()?.email">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="BirthDateControl" class="form-label">Date Of Birth</label>
+                <input type="text" class="form-control" id="BirthDateControl" disabled readonly
+                    [value]="_AuthenticationService.userData()?.dateOfBirth | date">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="CreateDateControl" class="form-label">Date of Creation</label>
+                <input type="text" class="form-control" id="CreateDateControl" disabled readonly
+                    [value]="_AuthenticationService.userData()?.createdAt | date">
+            </div>
+            <div class="col-md-12 mb-3">
+                <label for="UserIdControl" class="form-label">User ID</label>
+                <input type="text" class="form-control" id="UserIdControl" disabled readonly [value]="_AuthenticationService.userData()?._id">
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="w-100 btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#ChangePasswordModal">Change Password</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button class="w-100 btn btn-primary" data-bs-toggle="modal" data-bs-target="#UploadPhotoModal">Change
+                    Profile Photo</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Start Change Password Modal -->
+<div class="modal fade" id="ChangePasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Password</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="changePasswordData" (ngSubmit)="changePasswordSubmition()">
+                    <div class="col-md-12 mb-3">
+                        <label for="OldPasswordControl" class="form-label">Old Password</label>
+                        <input type="text" class="form-control" id="OldPasswordControl" formControlName="password">
+                        @if (changePasswordData.get("password")?.errors && changePasswordData.get("password")?.touched)
+                        {
+                        <p class="alert alert-danger">This field is requierd</p>
+                        }
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="NewPasswordControl" class="form-label">New Password</label>
+                        <input type="text" class="form-control" id="NewPasswordControl" formControlName="newPassword">
+                        @if (changePasswordData.get("newPassword")?.errors &&
+                        changePasswordData.get("newPassword")?.touched) {
+                        <div class="alert alert-danger">
+                            @if (changePasswordData.get("newPassword")?.getError("required")) {
+                            <p class="m-0">This Field is required</p>
+                            }
+                            @if (changePasswordData.get("newPassword")?.getError("pattern")) {
+                            <p class="fw-bold">You should follow this pattern</p>
+                            <p>1. must have at least one sympole</p>
+                            <p>2. must be at least 8 characters</p>
+                            <p>3. must have at least one upper char</p>
+                            <p>4. must have at least one lower char</p>
+                            <p>5. must have at least one number</p>
+                            }
+                        </div>
+                        }
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button #changePassClsBtn type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary"
+                    [disabled]="changePasswordData.invalid || isChangePassLoad">Save
+                    changes @if (isChangePassLoad) {<i class="fa-solid fa-spinner fa-spin"></i>}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Change Password Modal -->
+
+
+<!-- Start Upload Profile Photo Modal -->
+<div class="modal fade" id="UploadPhotoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Upload Profile Photo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 mb-3">
+                    <label for="UploadPhotoControl" class="form-label">Upload Photo</label>
+                    <input type="file" class="form-control" id="UploadPhotoControl" (change)="changeImage($event)">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button #uploadPhotoClsBtn type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="UploadPhoto()"
+                    [disabled]="!SavedImage || isUploadPhotoLoad">Upload @if (isUploadPhotoLoad) {<i
+                        class="fa-solid fa-spinner fa-spin"></i>}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Upload Profile Photo Modal -->

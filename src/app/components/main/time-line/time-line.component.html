@@ -1,0 +1,53 @@
+<section class="w-40 mx-auto custom-margin-top">
+    <!-- add post input -->
+    <app-add-post-section></app-add-post-section>
+    <!-- all posts -->
+    <div infiniteScroll [infiniteScrollDistance]="0.9" [infiniteScrollThrottle]="300" (scrolled)="loadPosts()">
+        @for (item of Posts(); track item.id) {
+        <div class="p-4 rounded-3 my-3 shadow-sm bg-body">
+            <!-- single post -->
+            <app-post [post]="item"></app-post>
+            <!-- show comments -->
+            <a class="link-primary text-decoration-none cursor-pointer" data-bs-toggle="modal"
+                data-bs-target="#mainCommentModal" (click)="showComments(item.id)">show comments</a>
+            <!-- comment section -->
+            @if (item.comments) {
+            <app-comments [Comment]="item.comments[0]"></app-comments>
+            }
+            <!-- add comment section -->
+            <app-add-comment-section [postId]="item._id"></app-add-comment-section>
+        </div>
+        }
+        @if (isLoading) {
+        <div class="my-4 text-center">
+            <span class="h3 me-3 fw-bold text-main-color">Linked Posts</span>
+            <i class="fa-solid fa-spinner fa-spin fa-xl"></i>
+        </div>
+        }
+    </div>
+</section>
+<!-- Comments Model -->
+<div class="modal fade" id="mainCommentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Comments</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- strat comment design -->
+                @for (item of Comments(); track item._id) {
+                <app-comments [Comment]="item"></app-comments>
+                }
+                <!-- end comment design -->
+            </div>
+            <div class="modal-footer">
+                <!-- add comment section -->
+                <div class="w-100">
+                    <app-add-comment-section [postId]="PostId"
+                        (Comments)="updateComments($event)"></app-add-comment-section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

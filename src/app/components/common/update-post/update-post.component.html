@@ -1,0 +1,24 @@
+<section class="col-lg-5 mx-auto custom-margin-top">
+    <div class="mb-3">
+        <textarea class="form-control border-dashed bg-secondary-subtle border-secondary"
+            placeholder="Write your thoughts here..." rows="3" [(ngModel)]="postContent"></textarea>
+    </div>
+    <div class="mb-3">
+        <input class="form-control border-dashed bg-secondary-subtle border-secondary " type="file"
+            placeholder="Choose Photo" (change)="holdImage($event)">
+    </div>
+    @if (imagePath) {
+    <div class="mb-3">
+        <img class="w-100" [src]="imagePath" alt="">
+    </div>
+    <button class="btn btn-danger w-100 mt-5" (click)="deletePhoto()">Delete Photo</button>
+    <p class="fs-small mb-5"><span class="text-danger">*</span>Note: that I have tried to delete photo from the original post but the problem came from back-end (after saving the photo from the first time it can't be deleted from database)</p>
+    <div>
+        <p class="text-capitalize">this post created at {{post.createdAt | date}} by {{post.user.name}}</p>
+    </div>
+    <div class="my-4 text-end">
+        <button class="btn btn-primary me-2" (click)="updatePostData()">Save Changes</button>
+        <button class="btn btn-outline-secondary" (click)="goHome()">Cancel</button>
+    </div>
+    }
+</section>

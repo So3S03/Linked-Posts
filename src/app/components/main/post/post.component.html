@@ -1,0 +1,32 @@
+@if (post) {
+<div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-start">
+        <div class="Photo me-3"><img class="w-100 rounded-circle object-fit-cover h-100" [src]="post.user.photo"
+                [alt]="post.user.name + ' Photo'"></div>
+        <div>
+            <p class="fw-bold m-0 fs-small">{{post.user.name}}</p>
+            <p class="m-0 fs-small">{{post.createdAt | date}}</p>
+        </div>
+    </div>
+    <div class="position-relative">
+        <i class="fa-solid fa-ellipsis fs-5 cursor-pointer" (click)="postOptMenuCollapse()"></i>
+        @if (isPostOptionMenuCollapsed) {
+        <div class="Post-Option-Menu rounded-3">
+            <p class="cursor-pointer" (click)="isPostOptionMenuCollapsed = false" [routerLink]="['/PostDetailes', post._id]">Post Details</p>
+            @if (post.user._id === _AuthenticationService.userData()?._id) {
+            <p class="cursor-pointer" (click)="isPostOptionMenuCollapsed = false" [routerLink]="['/UpdatePost', post._id]">Update Post</p>
+            <p class="m-0 cursor-pointer text-danger" (click)="deletePost(post._id)" (click)="isPostOptionMenuCollapsed = false">Delete Post</p>
+            }
+        </div>
+        }
+    </div>
+</div>
+@if (post.body) {
+<p class="py-2">{{post.body}}</p>
+}
+@if (post.image) {
+<div class="Content-Photo my-2">
+    <img class="w-100 rounded-3" [src]="post.image" alt="Content Photo">
+</div>
+}
+}

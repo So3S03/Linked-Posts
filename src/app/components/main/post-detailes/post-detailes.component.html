@@ -1,0 +1,20 @@
+@if (Post) {
+    <section class="w-40 mx-auto custom-margin-top">
+    
+    <div class="p-4 rounded-3 my-3 shadow-sm bg-body custom-margin-top">
+        <!-- post -->
+        <app-post [post]="Post"></app-post>
+        <!-- add comment section -->
+        <app-add-comment-section [postId]="PostId"></app-add-comment-section>
+        <!-- comments -->
+        <div class="custom-max-h mt-3">
+        @if (Post.comments) {
+            @for (comment of Post.comments.reverse(); track $index) {
+            <app-comments [Comment]="comment"></app-comments>
+        }
+        }
+        </div>
+    </div>
+
+</section>
+}

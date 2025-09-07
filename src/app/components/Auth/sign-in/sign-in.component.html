@@ -1,0 +1,44 @@
+<section class="p-3 bg-sec-color rounded-3 mt-5 col-7 mx-auto shadow">
+    <h4 class="mt-2 text-main-color mb-4">Login :</h4>
+    <form class="w-100" [formGroup]="userData" (ngSubmit)="login()">
+        <div class="mb-3 w-100">
+            <label for="EmailInput" class="form-label">Email address</label>
+            <input type="email" class="form-control w-100" id="EmailInput" placeholder="name@example.com"
+                formControlName="email">
+            @if (userData.get("email")?.errors && userData.get("email")?.touched) {
+            <div class="alert alert-danger w-100">
+                @if (userData.get("email")?.getError("required")) {
+                    <p class="m-0 p-0">this field is required</p>
+                }
+                @if(userData.get("email")?.getError("email")){
+                    <p class="m-0 p-0">you should follow this pattern <span class="fw-bold">name&#64;example.com</span></p>
+                }
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+            <label for="PasswordInput" class="form-label">Password</label>
+            <input type="password" class="form-control" id="PasswordInput" placeholder="Type Your Password"
+                formControlName="password">
+            @if (userData.get("password")?.errors && userData.get("password")?.touched) {
+            <div class="alert alert-danger w-100">
+                @if (userData.get("password")?.getError("required")) {
+                    <p class="m-0 p-0">this field is required</p>
+                }
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary rounded-4" [disabled]="userData.invalid || isLoading">Sign In
+                @if (isLoading) {<i class="fa-solid fa-spinner fa-spin"></i>}</button>
+        </div>
+        @if (isSuccess) {
+        <p class="alert alert-success w-50">Success you will be directed to the home page in 5 secounds</p>
+        }
+        @if(isError)
+        {
+        <p class="alert alert-danger w-50">incorrect email or password</p>
+        }
+        <p>Don't have an accont <a routerLink="/SignUp" class="link-primary text-decoration-none">Register</a></p>
+    </form>
+</section>

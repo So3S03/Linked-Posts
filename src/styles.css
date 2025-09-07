@@ -1,1 +1,122 @@
 /* You can add global styles to this file, and also import other style files */
+:root
+{
+    --main-color: #0A66C2;
+    --body-color: #F9FAFC;
+    --components-color: #ffffff;
+
+}
+body{
+    background-color: var(--body-color);
+}
+.text-main-color
+{
+    color: var(--main-color) !important;
+}
+
+.bg-main-color{
+    background-color: var(--main-color);
+}
+
+.bg-sec-color
+{
+    background-color: var(--components-color);
+}
+
+
+.cursor-pointer
+{
+    cursor: pointer;
+}
+
+.w-30
+{
+    width: 30%;
+}
+
+.w-40
+{
+    width: 40%;
+}
+
+.w-95
+{
+    width: 95%;
+}
+
+.fs-small
+{
+    font-size: small;
+}
+
+.resize-none
+{
+    resize: none;
+}
+
+.Photo
+{
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+}
+
+.custom-margin-top{
+    margin-top: 80px;
+}
+
+
+
+
+@media (min-width: 992px) {
+    .modal-md {
+        --bs-modal-width: 40%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (min-width: 980px) and (max-width: 1199px) {  
+    .w-40
+    {
+        width: 75%;
+    }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {  
+    .w-40
+    {
+        width: 75%;
+    }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {  
+    .w-40
+    {
+        width: 90%;
+    }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {  
+    .w-40{
+        width: 100%;
+    }
+}

@@ -1,0 +1,4 @@
+.custom-max-h{
+    max-height: 400px;
+    overflow-y: auto;
+}

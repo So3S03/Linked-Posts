@@ -1,0 +1,11 @@
+.Post-Option-Menu
+{
+    position: absolute;
+    top: 100%;
+    right: -10%;
+    width: 150px;
+    background-color: rgb(189, 189, 189);
+    text-align: center;
+    padding: 5px;
+}
+

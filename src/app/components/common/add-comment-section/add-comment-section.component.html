@@ -1,0 +1,7 @@
+<div class="p-3 bg-body-tertiary border rounded-2 d-flex justify-content-between">
+    <div class="col-11">
+        <textarea class="form-control rounded-3 resize-none" rows="1" placeholder="write comment" [(ngModel)]="commentContent"></textarea>
+    </div>
+    <div class="col-1 d-flex justify-content-end align-items-center"><i
+            class="fa-solid fa-paper-plane fa-lg text-primary cursor-pointer" (click)="addComment(postId)"></i></div>
+</div>

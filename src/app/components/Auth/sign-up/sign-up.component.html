@@ -1,0 +1,106 @@
+<section class="p-3 bg-sec-color rounded-3 mt-5 col-7 mx-auto shadow">
+    <h4 class="mt-2 text-main-color mb-4">Register :</h4>
+    <form class="w-100" [formGroup]="userData" (ngSubmit)="Register()" >
+        <div class="mb-3 w-100">
+            <label for="NameInput" class="form-label">User Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control w-100" id="NameInput" placeholder="Your Name" formControlName="name">
+            @if (userData.get("name")?.errors && userData.get("name")?.touched) {
+            <div class="alert alert-danger w-100">
+                @if (userData.get("name")?.getError("required")) {
+                    <p class="m-0 p-0">this field is required</p>
+                }
+                @if(userData.get("name")?.getError("minlength")){
+                    <p class="m-0 p-0">your Name Should be atleast 3 character</p>
+                }
+                @if(userData.get("name")?.getError("maxlength")){
+                    <p class="m-0 p-0">your Name Should be atmost 20 character</p>
+                }
+            </div>
+            }
+        </div>
+        <div class="mb-3 w-100">
+            <label for="EmailInput" class="form-label">Email address <span class="text-danger">*</span></label>
+            <input type="email" class="form-control w-100" id="EmailInput" placeholder="name@example.com" formControlName="email">
+            @if (userData.get("email")?.errors && userData.get("email")?.touched) {
+            <div class="alert alert-danger w-100">
+                @if (userData.get("email")?.getError("required")) {
+                    <p class="m-0 p-0">this field is required</p>
+                }
+                @if(userData.get("email")?.getError("email")){
+                    <p class="m-0 p-0">you should follow this pattern <span class="fw-bold">name&#64;example.com</span></p>
+                }
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+            <label for="PasswordInput" class="form-label">Password <span class="text-danger">*</span></label>
+            <input type="password" class="form-control" id="PasswordInput" placeholder="Your Password" formControlName="password">
+            @if (userData.get("password")?.errors && userData.get("password")?.touched) {
+            <div class="alert alert-danger w-100">
+                @if (userData.get("password")?.getError("required")) {
+                    <p class="m-0 p-0">this field is required</p>
+                }
+                @if(userData.get("password")?.getError("pattern")){
+                    <p class="fw-bold">1. must have at least one sympole like</p>
+                    <p class="fw-bold">2. must be at least 8 characters</p>
+                    <p class="fw-bold">3. must have at least one upper char</p>
+                    <p class="fw-bold">4. must have at least one lower char</p>
+                    <p class="fw-bold">5. must have at least one number</p>
+                }
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+            <label for="rePasswordInput" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+            <input type="password" class="form-control" id="rePasswordInput" placeholder="Confirm Password" formControlName="rePassword">
+            @if ((userData.get("rePassword")?.errors || userData.errors?.["mismatch"]) && userData.get("rePassword")?.touched) {
+            <div class="alert alert-danger w-100">
+                @if (userData.get("rePassword")?.getError("required")) {
+                    <p class="m-0 p-0">this field is required</p>
+                }
+                @if(userData.errors?.["mismatch"]){
+                    <p class="m-0 p-0">your password doesn't match</p>
+                }
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+            <label for="DateInput" class="form-label">Birth Date <span class="text-danger">*</span></label>
+            <input type="date" class="form-control w-25" id="DateInput" placeholder="Choose Date" formControlName="dateOfBirth">
+            @if ((userData.get("dateOfBirth")?.errors || userData.errors?.["userAgeInValid"]) && userData.get("dateOfBirth")?.touched) {
+            <div class="alert alert-danger w-100">
+                @if (userData.get("dateOfBirth")?.getError("required")) {
+                    <p class="m-0 p-0">this field is required</p>
+                }
+                @if(userData.errors?.["userAgeInValid"]){
+                    <p class="m-0 p-0">you should be (16 - 100) years old</p>
+                }
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="male"
+                    value="male" formControlName="gender">
+                <label class="form-check-label" for="male">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="female"
+                    value="female" formControlName="gender">
+                <label class="form-check-label" for="female">Female</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary rounded-4" [disabled]="isLoading || userData.invalid" >Sign Up @if (isLoading) {<i
+                    class="fa-solid fa-spinner fa-spin"></i>}</button>
+        </div>
+        @if (isSuccess) {
+        <p class="alert alert-success w-50">Success you will be directed to the Login page in 5 secounds</p>
+        }
+        @if(isError)
+        {
+        <p class="alert alert-danger w-50">{{errorMsg}}</p>
+        }
+        <p>Already have an accont? <a routerLink="/SignIn" class="link-primary text-decoration-none">Login</a></p>
+    </form>
+</section>

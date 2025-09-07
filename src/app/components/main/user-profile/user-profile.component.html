@@ -1,0 +1,75 @@
+<section class="mt-4">
+    <div class="col-lg-10 mx-auto">
+        <div class="w-100 cover-photo overflow-hidden">
+            <img class="w-100" src="./assets/Photos/static-personal-cover-photo.jpg" alt="coverPhoto">
+        </div>
+        <div class="Personal-Info w-100 p-3 mx-auto row shadow-sm">
+            <div class="d-flex justify-content-around align-items-center col-md-5 mb-4">
+                <div class="Profile-Photo">
+                    <img class="w-100 rounded-circle border-secondary border border-3 object-fit-cover h-100" [src]="_AuthenticationService.userData()?.photo" [alt]="_AuthenticationService.userData()?.name + ' Photo'">
+                </div>
+                <div class="w-50 text-center">
+                    <h3 class="mx-0">{{_AuthenticationService.userData()?.name}}</h3>
+                    <p class="m-0 p-0">Gender: {{_AuthenticationService.userData()?.gender}}</p>
+                </div>
+            </div>
+            <div class="col-md-5 text-center mb-4">
+                <h5 class="mx-0">{{_AuthenticationService.userData()?.email}}</h5>
+                <p class="m-0 p-0">Birth date: {{_AuthenticationService.userData()?.dateOfBirth}}</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-40 mx-auto mt-3">
+    <!-- add post -->
+    <app-add-post-section></app-add-post-section>
+    @if (userPosts().length > 0) {
+    <!-- get all posts -->
+    @for (post of userPosts(); track post._id) {
+    <div class="p-4 rounded-3 my-3 shadow-sm bg-body">
+        <!-- single post -->
+        <app-post [post]="post"></app-post>
+        <!-- show comments -->
+        <div class="my-3 text-center">
+            <a class="link-primary text-decoration-none cursor-pointer" data-bs-toggle="modal"
+                data-bs-target="#mainCommentModal" (click)="showComments(post.id)">show comments</a>
+        </div>
+        <!-- comments -->
+        @if (post.comments.length > 0) {
+        <app-comments [Comment]="post.comments[0]"></app-comments>
+        }
+        <!-- add comment section -->
+        <app-add-comment-section [postId]="post._id"></app-add-comment-section>
+    </div>
+    }
+    }
+    @else {
+    <p class="text-center mt-3 alert alert-warning fs-3">You Have No Posts Yet</p>
+    }
+</section>
+
+
+<div class="modal fade" id="mainCommentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Comments</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- strat comment design -->
+                @for (item of postComments(); track item._id) {
+                <app-comments [Comment]="item"></app-comments>
+                }
+                <!-- end comment design -->
+            </div>
+            <div class="modal-footer">
+                <!-- add comment section -->
+                <div class="w-100">
+                    <app-add-comment-section [postId]="PostId"
+                        (Comments)="updateComments($event)"></app-add-comment-section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<nav class="navbar bg-body shadow  position-fixed top-0 start-0 end-0 z-3">
+    <div class="container d-flex justify-content-between">
+        <span class="navbar-brand mb-0 h1 text-main-color fw-bold cursor-pointer" routerLink="/TimeLine">Linked Posts</span>
+        <div>
+            <div class="Photo-Setting">
+                @if(_AuthenticationService.userData()?.photo){
+                    <img class="w-100 cursor-pointer rounded-circle object-fit-cover h-100" [src]="_AuthenticationService.userData()?.photo" alt="" (click)="collapsing()">
+                }
+                @else {
+                    <img class="w-100 cursor-pointer rounded-circle" src="./assets/Photos/profile.png" alt="" (click)="collapsing()">
+                }
+                <span class="shape"><i class="fa-solid fa-chevron-down"></i></span>
+                @if (isCollapsed) {
+                <div class="Menu p-2 rounded-2">
+                    <div class="d-flex justify-content-between align-items-center pb-2 border-bottom border-secondary cursor-pointer" routerLink="UserProfile" (click)="collapsing()"><p class="m-0 p-0">My Profile</p> <div><i class="fa-solid fa-user text-primary"></i></div></div>
+                    <div class="d-flex justify-content-between align-items-center pb-2 border-bottom border-secondary cursor-pointer mt-2" routerLink="Settings" (click)="collapsing()"><p class="m-0 p-0">Settings</p> <div><i class="fa-solid fa-gear fa-spin text-main-color"></i></div></div>
+                    <div class="d-flex justify-content-between align-items-center mt-2 cursor-pointer" (click)="logOut()"><p class="m-0 p-0">Log Out</p> <div><i class="fa-solid fa-right-from-bracket text-danger"></i></div></div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,39 @@
+<div class="bg-body shadow-sm p-4 rounded-3">
+    <input class="form-control rounded-5 w-95 mx-auto" readonly type="text"
+        [placeholder]="'What is in your mind, ' + _AuthenticationService.userData()?.name?.split(' ', 1)" data-bs-toggle="modal"
+        data-bs-target="#staticBackdropAddPost">
+</div>
+
+
+
+<!-- Post Modal -->
+    <div class="modal fade" id="staticBackdropAddPost" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add New Post</h1>
+                <button #closeBtn type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <textarea class="form-control border-dashed bg-secondary-subtle border-secondary"
+                        placeholder="Write your thoughts here..." rows="3" [(ngModel)]="postContent"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control border-dashed bg-secondary-subtle border-secondary " type="file" placeholder="Choose Photo" (change)="holdImage($event)">
+                </div>
+                @if (imagePath) {
+                <div class="mb-3">
+                    <img class="w-100" [src]="imagePath" alt="">
+                </div>
+                <button class="btn btn-danger w-100" (click)="deletePhoto()">Delete Photo</button>
+                }
+            </div>
+            <div class="modal-footer justify-content-start">
+                <button type="button" class="btn btn-primary" (click)="addPost()">Post</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
