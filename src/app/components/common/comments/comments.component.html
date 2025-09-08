@@ -6,7 +6,7 @@
             <div class="Photo me-3">
                 @if (Comment.commentCreator.photo.includes("undefined") ||
                 !Comment.commentCreator.photo) {
-                <img class="w-100 rounded-circle" src="../assets/Photos/profile.png" alt="">
+                <img class="w-100 rounded-circle" src="./assets/Photos/profile.png" alt="">
                 }
                 @else {
                 <img class="w-100 rounded-circle" [src]="Comment.commentCreator.photo"
